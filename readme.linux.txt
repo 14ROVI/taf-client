@@ -3,7 +3,7 @@ QUICK START FOR UBUNTU 22.04 LTS
 
 1. Install dependencies
 
-   $ sudo apt-get install qtbase5-dev zlib1g git git-lfs wine winetricks openjdk-18-jre
+   $ sudo apt-get install qtbase5-dev zlib1g git git-lfs wine winetricks openjdk-19-jre
 
 2. Configure 32 bit wine and install directplay
 

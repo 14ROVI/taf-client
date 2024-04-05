@@ -1,0 +1,54 @@
+plugins {
+  id 'java-library'
+  id("io.freefair.lombok") version "5.3.3.3"
+}
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.11
+
+if (project.ext.javaFxPlatform == "unspecified") {
+  switch (org.gradle.internal.os.OperatingSystem.current()) {
+    case org.gradle.internal.os.OperatingSystem.LINUX:
+      project.ext.javafxPlatform = "linux"
+      break
+    case org.gradle.internal.os.OperatingSystem.MAC_OS:
+      project.ext.javafxPlatform = "mac"
+      break
+    case org.gradle.internal.os.OperatingSystem.WINDOWS:
+      project.ext.javafxPlatform = "win"
+      break
+  }
+  if (System.getProperty("os.arch").equals("x86")) {
+    project.ext.javafxPlatform += "-x86";
+  }
+  println "OS is: ${org.gradle.internal.os.OperatingSystem.current()}"
+  println "Architecture is: ${System.getProperty("os.arch")}"
+  println "Data model is: ${System.getProperty("sun.arch.data.model")}"
+  println "Platform is: ${project.ext.javafxPlatform}"
+}
+
+repositories {
+  mavenCentral()
+}
+
+configurations {
+  jar.archiveFileName = 'fxstage.jar'
+}
+
+jar {
+  manifest {
+    attributes "Premain-Class": "ch.micheljung.fxwindow.FxStage"
+  }
+}
+
+dependencies {
+  api "net.java.dev.jna:jna:${jnaVersion}"
+  api "net.java.dev.jna:jna-platform:${jnaVersion}"
+  api "org.apache.logging.log4j:log4j-api:${log4j2Version}"
+
+  compileOnly "org.openjfx:javafx-base:${javaFxVersion}:${project.ext.javafxPlatform}"
+  compileOnly "org.openjfx:javafx-controls:${javaFxVersion}:${project.ext.javafxPlatform}"
+  compileOnly "org.openjfx:javafx-fxml:${javaFxVersion}:${project.ext.javafxPlatform}"
+  compileOnly "org.openjfx:javafx-graphics:${javaFxVersion}:${project.ext.javafxPlatform}"
+}
