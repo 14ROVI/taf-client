@@ -2,10 +2,12 @@ package com.faforever.client.fx;
 
 import com.faforever.client.preferences.PreferencesService;
 import com.faforever.client.theme.UiService;
+import com.sun.javafx.webkit.Accessor;
 import javafx.concurrent.Worker.State;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import lombok.extern.slf4j.Slf4j;
@@ -53,7 +55,7 @@ public class WebViewConfigurer {
   public BrowserCallback configureWebView(WebView webView, Function<String,String> hrefTransformer) {
 
     WebEngine engine = webView.getEngine();
-//    Accessor.getPageFor(engine).setBackgroundColor(0);
+    Accessor.getPageFor(engine).setBackgroundColor(0);
     webView.setContextMenuEnabled(false);
     webView.setOnScroll(event -> {
       if (event.isControlDown()) {

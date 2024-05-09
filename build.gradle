@@ -180,7 +180,6 @@ bootRun {
             "-XX:ConcGCThreads=1",
             "-XX:ParallelGCThreads=1",
             "-XX:+UseG1GC",
-            "-javaagent:webview-patch/build/libs/webview-patch.jar",
             "-javaagent:fxstage/build/libs/fxstage.jar",
             "-Djava.net.preferIPv4Stack=true",
             "-XX:TieredStopAtLevel=1"
@@ -352,7 +351,6 @@ task downloadNativeDependencies(dependsOn: [downloadUnixUid, downloadWindowsUid,
 }
 
 compileJava.dependsOn 'downloadNativeDependencies'
-compileJava.dependsOn ':webview-patch:build'
 compileJava.dependsOn ':fxstage:build'
 
 task sendCoverageToCodacy(type: JavaExec, dependsOn: jacocoTestReport) {
@@ -429,9 +427,6 @@ dependencies {
   implementation("com.github.1-alex98:discord-rpc:1.6.2-jna")
   implementation("org.controlsfx:controlsfx:11.1.1")
   implementation("org.fxmisc.flowless:flowless:0.6.7")
-
-  implementation(project(":webview-patch"))
-  implementation("org.javassist:javassist:${project.ext['javassist.version']}")
 
   implementation("com.install4j:install4j-runtime:10.0.3")
 
