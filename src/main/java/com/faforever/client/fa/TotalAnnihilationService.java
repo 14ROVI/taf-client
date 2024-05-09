@@ -27,8 +27,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * Knows how to starts/stop Total Annihilation with proper parameters. Downloading maps, mods and updates as well as
- * notifying the server about whether the preferences is running or not is <strong>not</strong> this service's
+ * Knows how to start/stop Total Annihilation with proper parameters. Downloading maps, mods and updates as well as
+ * notifying the server about whether the preferences are running or not is <strong>not</strong> this service's
  * responsibility.
  */
 @Lazy

@@ -10,6 +10,7 @@ import com.faforever.client.fx.StringCell;
 import com.faforever.client.fx.StringListCell;
 import com.faforever.client.game.KnownFeaturedMod;
 import com.faforever.client.i18n.I18n;
+import com.faforever.client.mod.FeaturedMod;
 import com.faforever.client.mod.ModService;
 import com.faforever.client.notification.Action;
 import com.faforever.client.notification.NotificationService;
@@ -330,7 +331,7 @@ public class SettingsController implements Controller<Node> {
     notifyOnAtMentionOnlyToggle.selectedProperty().bindBidirectional(preferences.getNotification().notifyOnAtMentionOnlyEnabledProperty());
     enableSoundsToggle.selectedProperty().bindBidirectional(preferences.getNotification().soundsEnabledProperty());
     gameLocationModTableColumn.setCellValueFactory(new PropertyValueFactory<>("getModName"));
-    gameLocationModTableColumn.setCellFactory(param -> new StringCell<>(technicalName -> modService.getFeaturedModDisplayName(technicalName)));
+    gameLocationModTableColumn.setCellFactory(param -> new StringCell<>(modService::getFeaturedModDisplayName));
     gameLocationExecutableTableColumn.setCellValueFactory(new PropertyValueFactory<>("getInstalledExePath"));
     gameLocationCommandLineOptionsTableColumn.setCellValueFactory(new PropertyValueFactory<>("getCommandLineOptions"));
 
@@ -338,7 +339,7 @@ public class SettingsController implements Controller<Node> {
     modService.getFeaturedMods()
         .thenApply(modList -> {
           modList.stream()
-            .filter(featuredMod -> featuredMod.isVisible())
+            .filter(FeaturedMod::isVisible)
             .forEach(featuredMod -> preferencesService.getTotalAnnihilation(featuredMod.getTechnicalName()));
           return modList;
         });
@@ -357,7 +358,6 @@ public class SettingsController implements Controller<Node> {
 //            .get(t.getTablePosition().getRow())
 //            .setCommandLineOptions(t.getNewValue()));
 
-    JavaFxUtil.bindBidirectional(iceAcceptableLatencyTextField.textProperty(), preferences.getIceAcceptableLatencyProperty(), numberToStringConverter);
     forceRelayToggle.selectedProperty().bindBidirectional(preferences.getForceRelayEnabledProperty());
     proactiveResendToggle.selectedProperty().bindBidirectional(preferences.getProactiveResendEnabledProperty());
     suppressReplayChatToggle.selectedProperty().bindBidirectional(preferences.getSuppressReplayChatEnabledProperty());
